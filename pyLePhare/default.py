@@ -34,9 +34,11 @@ ERR_MAG_OBS()
 MAG_ABS()
 ERR_MAG_ABS()"""
 
+strFolder = "/".join(__file__.split("/")[:-1])
+__folder__ = f"/{strFolder}"
 
 def output_pars():
-    f = open("lephare-output.para")
+    f = open(f"{__folder__}/lephare-output.para")
     txt = f.readlines()
     f.close()
 
@@ -57,7 +59,7 @@ default_pars = output_pars()
 
 
 def config_pars():
-    f = open("lephare.para")
+    f = open(f"{__folder__}/lephare.para")
     txt = f.readlines()
     f.close()
 

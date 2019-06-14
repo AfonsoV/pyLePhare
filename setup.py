@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
   name = "pyLePhare",
-  packages = ["lephare"],
+  packages = ["pyLePhare"],
   version = "0.1.0",
   description = "A python wrapper for the LePhare SED fitting code",
   author = "Bruno Ribeiro",

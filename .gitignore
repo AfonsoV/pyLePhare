@@ -1,1 +1,6 @@
 __pycache__
+
+# SetupTools Folders
+build/
+dist/
+pyLePhare.egg-info/

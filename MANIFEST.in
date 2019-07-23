@@ -1,1 +1,1 @@
-include pyLePhare/*.para
+include pyLePhare *.para

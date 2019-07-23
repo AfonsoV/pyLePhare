@@ -1,1 +1,1 @@
-include pyLePhare/*.para
+recursive-include lephare *.para

@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 recursive-include lephare *.para
+=======
+include pyLePhare *.para
+>>>>>>> 28449080a69ddc111cade3bb996966ff1e2fb1dd

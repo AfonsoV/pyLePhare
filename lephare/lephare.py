@@ -159,7 +159,7 @@ class LePhare:
         self.sedtolib("G",parfile,debug=debug)
         self.filter(parfile,debug=debug)
         self.mag("G",parfile,debug=debug)
-        zself.phota(parfile,debug=debug)
+        self.zphota(parfile,debug=debug)
         return
 
     def create_lephare_input(self,table,bands,tmpdir=None,errsuffix="_err",fname=None):

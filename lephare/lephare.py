@@ -246,17 +246,21 @@ class LePhare:
             if len(cln)>1 and not cln.isdigit():
                 columns.append(cln)
 
-        colBands = []
-        for coln in ["MOBS_%s","MOBSERR_%s","MABS_%s","MABSERR_%s"]:
-            for b in bands:
-                colBands += [coln%(b)]
+        if not "MAG_OBS()" in columns:
+            return columns
+        else:
+            colBands = []
+            for coln in ["MOBS_%s","MOBSERR_%s","MABS_%s","MABSERR_%s"]:
+                for b in bands:
+                    colBands += [coln%(b)]
 
-        for colmag in ["MAG_OBS()","ERR_MAG_OBS()", "MAG_ABS()", "ERR_MAG_ABS()"]:
-            k = columns.index(colmag)
-            columns.pop(k)
 
-        FinalColumns = columns[:k] + colBands + columns[k:]
-        return FinalColumns
+            for colmag in ["MAG_OBS()","ERR_MAG_OBS()", "MAG_ABS()", "ERR_MAG_ABS()"]:
+                k = columns.index(colmag)
+                columns.pop(k)
+
+            FinalColumns = columns[:k] + colBands + columns[k:]
+            return FinalColumns
 
     def read_output(self,fname=None):
         if fname is None:

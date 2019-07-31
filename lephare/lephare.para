@@ -8,23 +8,22 @@
 STAR_SED	$LEPHAREDIR/sed/STAR/STAR_MOD.list	# STAR list (full path)
 STAR_FSCALE	3.432E-09				# Arbitrary Flux Scale
 STAR_LIB	LIB_STAR				# Bin. STAR LIBRARY ->
-							# $LEPHAREWORK/lib_bin
+# $LEPHAREWORK/lib_bin
 #
 #------      QSO LIBRARY (ASCII SEDs)
 QSO_SED		$LEPHAREDIR/sed/QSO/QSO_MOD.list        # QSO list (full path)
 QSO_FSCALE	1					# Arbitrary Flux Scale
 QSO_LIB		LIB_QSO					# Bin. QSO LIBRARY ->
-							# $LEPHAREWORK/lib_bin
+# $LEPHAREWORK/lib_bin
 #
 #------      GALAXY LIBRARY (ASCII or BINARY SEDs)
 GAL_SED	   $LEPHAREDIR/sed/GAL/BC03_CHAB/BC03_MOD.list  # GAL list (full path)
 GAL_FSCALE	1.					# Arbitrary Flux Scale
 GAL_LIB		LIB_GAL 				# Bin. GAL LIBRARY ->
-							# $LEPHAREWORK/lib_bin
+# $LEPHAREWORK/lib_bin
 SEL_AGE   $LEPHAREDIR/sed/GAL/BC03_CHAB/BC03_AGE.list # Age list(full path)
-							# (def=NONE)
+# (def=NONE)
 AGE_RANGE  0.,13.e9                                     # Age Min-Max in yr
-
 #############################################################################
 #                           FILTERS                                         #
 #  $LEPHAREDIR/source/filter  -c $LEPHAREDIR/config/zphot.para              #
@@ -97,7 +96,7 @@ CAT_MAG      AB                   # Input Magnitude (AB or VEGA)
 CAT_FMT      MEME  		  # MEME: (Mag,Err)i
   		                  # MMEE: (Mag)i,(Err)i
 CAT_LINES    0,1000000000             #  MIN and MAX RANGE of ROWS used in input cat [def:-99,-99]
-CAT_TYPE     LONG	          # Input Format    (LONG,SHORT-def)
+CAT_TYPE     SHORT	          # Input Format    (LONG,SHORT-def)
 CAT_OUT	     lephare.out	# Output catalog (full path)
 PARA_OUT     lephare-output.para # Ouput parameter (full path)
 #

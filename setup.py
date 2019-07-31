@@ -17,5 +17,5 @@ setup(
                  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"],
   license="GPLv3",
   include_package_data=True,
-  install_requires=[]
+  install_requires=["numpy","astropy","matplotlib"]
 )

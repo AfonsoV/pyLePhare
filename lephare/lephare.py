@@ -120,6 +120,11 @@ class LePhare:
         return result
 
     def prepare_files(self,parfile):
+        work_folders = ["filt", "lib_bin", "lib_mag"]
+        for fldr in work_folders:
+            path = f"{self.workdir}/{fldr}"
+            if not os.path.isdir(path):
+                os.mkdir(path)
 
         f = open(f"{parfile}","w")
         for key, val in LePhare.CONFIG.items():

@@ -55,12 +55,13 @@ class LePhare:
                     LePhare.CONFIG[key] = val
 
         if parameters is not None:
-            assert isinstance(parameters, dict), "parameters must be a dictionary."
-            for key, val in parameters.items():
-                if key not in LePhare.PARAMETERS.keys():
-                    raise lephareError(f"{key} not valid in parameters file")
+            assert isinstance(parameters, list), "parameters must be a list of strings."
+            for key, val in LePhare.PARAMETERS.items():
+                if key not in parameters:
+                    LePhare.PARAMETERS[key] = 0
                 else:
-                    LePhare.PARAMETERS[key] = val
+                    LePhare.PARAMETERS[key] = 1
+
         return
 
 

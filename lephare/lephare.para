@@ -71,8 +71,8 @@ GAL_LIB_OUT	GAL_LPH      # Output GAL LIBRARY  -> $LEPHAREWORK/lib_mag/
 MAGTYPE         AB		     # Magnitude type (AB or VEGA)
 Z_STEP 		0.05,8.,0.1 	     # dz, zmax, dzsup(if zmax>6)
 COSMOLOGY	70,0.3,0.7	     # H0,om0,lbd0    (if lb0>0->om0+lbd0=1)
-MOD_EXTINC	3,12,3,12		     # model range for extinction
-EXTINC_LAW	SB_calzetti.dat,extlaw_0.9.dat	     # ext. law (in  $LEPHAREDIR/ext/*)
+MOD_EXTINC	0,0 		     # model range for extinction
+EXTINC_LAW	SB_calzetti.dat	     # ext. law (in  $LEPHAREDIR/ext/*)
 EB_V            0.,0.05,0.1,0.15,0.2,0.25,0.3  # E(B-V) (<50 values)
 EM_LINES        YES
 # Z_FORM 	8,7,6,5,4,3 	     # Zformation for each SED in GAL_LIB_IN

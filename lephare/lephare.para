@@ -173,7 +173,7 @@ SPEC_OUT	NO	 	 # spectrum for each object?  [YES,NO-def]
 CHI2_OUT        NO               # output file with all values : z,mod,chi2,E(B-V),...
                                  # BE CAREFUL can take a lot of space !!
 #########  OUTPUT PDZ ANALYSIS
-PDZ_OUT         pdz_file             # pdz output file name [def-NONE]
+PDZ_OUT         NONE             # pdz output file name [def-NONE]
                                  # add automatically PDZ_OUT[.pdz/.mabsx/.mod/.zph]
 PDZ_MABS_FILT   2,10,14           # MABS for REF FILTERS to be extracted
 #

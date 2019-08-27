@@ -1,12 +1,12 @@
 """
-$LEPHAREDIR/source/sedtolib -t S -c nnnnn.para
-$LEPHAREDIR/source/sedtolib -t Q -c nnnnn.para
-$LEPHAREDIR/source/sedtolib -t G -c nnnnn.para
-$LEPHAREDIR/source/filter -c nnnnn.para
-$LEPHAREDIR/source/mag_star -c nnnnn.para
-$LEPHAREDIR/source/mag_gal -t Q -c nnnnn.para
-$LEPHAREDIR/source/mag_gal -t G -c nnnnn.para
-$LEPHAREDIR/source/zphota -c nnnnn.para
+$LEPHAREDIR/source/sedtolib -t S -c zphot.para
+$LEPHAREDIR/source/sedtolib -t Q -c zphot.para
+$LEPHAREDIR/source/sedtolib -t G -c zphot.para
+$LEPHAREDIR/source/filter -c zphot.para
+$LEPHAREDIR/source/mag_star -c zphot.para
+$LEPHAREDIR/source/mag_gal -t Q -c zphot.para
+$LEPHAREDIR/source/mag_gal -t G -c zphot.para
+$LEPHAREDIR/source/zphota -c zphot.para
 """
 
 import sys
@@ -246,21 +246,43 @@ class LePhare:
             if len(cln)>1 and not cln.isdigit():
                 columns.append(cln)
 
+        colBands = []
+        k=0
         if not "MAG_OBS()" in columns:
-            return columns
+            colBands += []
         else:
-            colBands = []
-            for coln in ["MOBS_%s","MOBSERR_%s","MABS_%s","MABSERR_%s"]:
+            for coln in ["MOBS_%s","MOBSERR_%s"]:
                 for b in bands:
                     colBands += [coln%(b)]
 
-
-            for colmag in ["MAG_OBS()","ERR_MAG_OBS()", "MAG_ABS()", "ERR_MAG_ABS()"]:
+            for colmag in ["MAG_OBS()","ERR_MAG_OBS()"]:
                 k = columns.index(colmag)
                 columns.pop(k)
 
-            FinalColumns = columns[:k] + colBands + columns[k:]
-            return FinalColumns
+        if not "MAG_MOD()" in columns:
+            colBands += []
+        else:
+            for coln in ["MMOD_%s"]:
+                for b in bands:
+                    colBands += [coln%(b)]
+
+                k = columns.index("MAG_MOD()")
+                columns.pop(k)
+
+        if not "MAG_ABS()" in columns:
+            colBands += []
+        else:
+            for coln in ["MABS_%s","MABSERR_%s"]:
+                for b in bands:
+                    colBands += [coln%(b)]
+
+            for colmag in ["MAG_ABS()","ERR_MAG_ABS()"]:
+                k = columns.index(colmag)
+                columns.pop(k)
+
+        FinalColumns = columns[:k] + colBands + columns[k:]
+        return FinalColumns
+
 
     def read_output(self,fname=None):
         if fname is None:
@@ -268,7 +290,6 @@ class LePhare:
 
         tableLePhare = Table.read(fname,format="ascii")
         colnames = self._get_colnames(fname)
-
         for i,c in enumerate(tableLePhare.colnames):
             tableLePhare[c].name = colnames[i]
         return tableLePhare

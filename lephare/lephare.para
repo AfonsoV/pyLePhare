@@ -154,7 +154,7 @@ MIN_THRES       0.02              # Lower threshold for 2nd peaks[0->1; 0.1-def]
 
 #########    ABSOLUTE MAGNITUDES COMPUTATION   ###########
 #
-MABS_METHOD	0		 # 0[-def] : obs->Ref
+MABS_METHOD	1		 # 0[-def] : obs->Ref
                                  # 1 : best  obs->Ref
                                  # 2 : fixed obs->Ref
                                  # 3 : mag from best SED

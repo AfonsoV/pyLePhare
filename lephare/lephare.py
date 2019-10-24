@@ -20,6 +20,7 @@ from astropy import units as u
 from astropy.table import Table
 import numpy as np
 import matplotlib.pyplot as mpl
+import matplotlib.ticker as mpt
 
 from .default import default_pars, default_config
 
@@ -162,7 +163,7 @@ class LePhare:
         self.zphota(parfile,debug=debug)
         return
 
-    def create_lephare_input(self,table,bands,tmpdir=None,errsuffix="_err",fname=None):
+    def create_lephare_input(self,table,bands,tmpdir=None,errsuffix="_err",longcat=False,fname=None):
         if tmpdir is None:
             tmpdir = os.getcwd()
 
@@ -199,6 +200,11 @@ class LePhare:
                 nanSel = np.isnan(table[bnd])
                 table[bnd][nanSel] = -99.
                 table[f"{bnd}{errsuffix}"][nanSel] = -99.
+
+        if longcat is True:
+            table["context"]=0
+            cols.append("context")
+            cols.append("zphot")
 
         table[cols].write(fpointer,format="ascii.commented_header")
         return fname

@@ -384,14 +384,16 @@ def plot_SED(filename, ax = None, sedOnly=False, **kwargs):
 
     ##############  PLOT  ###############
 
-    ### Initialise the figure
-    fig=mpl.figure(figsize=(10,8))
+
 
     ### Main panel
     if ax is None:
+        ### Initialise the figure
+        fig=mpl.figure(figsize=(10,8))
         ax1=fig.add_axes([.1,.1,.78,.78], xscale='log',\
-          xlabel='$\lambda$ [$\mu$m]',ylabel='log(F$_{\\nu}$ [$\mu$Jy]) ')
+        xlabel='$\lambda$ [$\mu$m]',ylabel='log(F$_{\\nu}$ [$\mu$Jy]) ')
     else:
+        fig = None
         ax1 = ax
 
 

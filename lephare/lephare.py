@@ -308,7 +308,7 @@ class LePhare:
         return
 
 
-def plot_SED(filename, ax = None, sedOnly=False, **kwargs):
+def plot_SED(filename, ax = None, sedOnly=False, modelmags = False, **kwargs):
     ### Open .spec file[s] and read the parameters
     fsp=open(filename,'r')
 
@@ -458,6 +458,11 @@ def plot_SED(filename, ax = None, sedOnly=False, **kwargs):
 
     ax1.errorbar(lf2b,mag2b,yerr=em2b,xerr=dlf2b,fmt='o',color="crimson",mfc=color,ms=10,mew=2)
     ax1.errorbar(lf2,mag2,yerr=em2,xerr=dlf2,fmt='o',color="ForestGreen",mfc=color,ms=10,mew=2)
+
+    if modelmags is True:
+        ax1.errorbar(lf/10000.,mmod,xerr=dlf/10000.,fmt='s',color="black",\
+                     mec="black",mfc="none",ms=20,mew=2,alpha=0.25,zorder=-1)
+
     #... and upper limits
     iu=np.where(em1<0)
     if len(iu[0])>0 :

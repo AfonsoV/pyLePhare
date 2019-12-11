@@ -46,7 +46,36 @@ class LePhare:
     PARAMETERS = copy.deepcopy(default_pars)
 
     def __init__(self, config = None, parameters = None):
+        r""" Initializes the class that hold all LePhare related methods and
+        variables. It can be used to create input configuration files, input
+        parameter files, input parameter catalogs, and run individual lephare
+        commands directly from a python shell.
 
+        Parameters
+        ----------
+
+        config : dict
+            Dictionary overriding the default configuration parameters.
+
+        parameters : dict
+            Dictionary overriding the default output parameters list.
+
+        Returns
+        -------
+        None
+
+        References
+        ----------
+
+        See http://www.cfht.hawaii.edu/~arnouts/LEPHARE/download.html
+        for details.
+
+        See also default_config; default_pars
+
+        Examples
+        --------
+
+        """
         if config is not None:
             assert isinstance(config, dict), "config must be a dictionary."
             for key, val in config.items():
@@ -67,11 +96,46 @@ class LePhare:
 
 
     def set_working_directory(self,dir):
+        r""" Set the working directory for when running LePhare. This is where
+        all SED libraries will be stored if they do not alreaady exist.
+
+        Parameters
+        ----------
+
+        dir : string
+            Path to use as the LePhare working directory.
+
+        Returns
+        -------
+        None
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         os.environ["LEPHAREWORK"] = dir
         self.workdir = dir
         return
 
     def get_filters(self,filters,SearchFolder=None):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         lepharedir = os.environ['LEPHAREDIR']
         if SearchFolder is None:
             SearchFolder = "*"
@@ -87,27 +151,102 @@ class LePhare:
         return filter_files
 
     def set_filters(self,filters,SearchFolder=None):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         filter_files = self.get_filters(filters,SearchFolder=SearchFolder)
         LePhare.CONFIG["FILTER_LIST"] = ",".join(filter_files)
         return None
 
     def run_cmd(self,cmd,debug=False):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         result = sp.run(cmd,shell=True,stdout=sp.PIPE)
         if debug is True:
             print(result.stdout.decode())
         return result
 
     def sedtolib(self,lib,parfile,debug=False):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         cmd = f"$LEPHAREDIR/source/sedtolib -t {lib} -c {parfile}"
         result = self.run_cmd(cmd,debug=debug)
         return result
 
     def filter(self,parfile,debug=False):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         cmd = f"$LEPHAREDIR/source/filter -c {parfile}"
         result = self.run_cmd(cmd,debug=debug)
         return result
 
     def mag(self,lib,parfile,debug=False):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         if lib == "S":
             cmd = f"$LEPHAREDIR/source/mag_star -c {parfile}"
         else:
@@ -116,11 +255,41 @@ class LePhare:
         return result
 
     def zphota(self,parfile,debug=False):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         cmd = f"$LEPHAREDIR/source/zphota -c {parfile}"
         result = self.run_cmd(cmd,debug=debug)
         return result
 
     def prepare_files(self,parfile):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         work_folders = ["filt", "lib_bin", "lib_mag"]
         for fldr in work_folders:
             path = f"{self.workdir}/{fldr}"
@@ -140,6 +309,21 @@ class LePhare:
         return
 
     def run_all(self,parfile,debug=False):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         self.prepare_files(parfile)
 
         self.sedtolib("S",parfile,debug=debug)
@@ -156,6 +340,21 @@ class LePhare:
         return
 
     def run_gal(self,parfile,debug=False):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         self.prepare_files(parfile)
         self.sedtolib("G",parfile,debug=debug)
         self.filter(parfile,debug=debug)
@@ -164,6 +363,21 @@ class LePhare:
         return
 
     def create_lephare_input(self,table,bands,tmpdir=None,errsuffix="_err",longcat=False,fname=None):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         if tmpdir is None:
             tmpdir = os.getcwd()
 
@@ -210,6 +424,21 @@ class LePhare:
         return fname
 
     def config(self):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         print("="*30)
         print("Current configuration parameters")
         print("="*30)
@@ -218,6 +447,21 @@ class LePhare:
         return
 
     def param(self):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         print("="*30)
         print("Current output parameters")
         print("="*30)
@@ -228,6 +472,21 @@ class LePhare:
 
 
     def _get_colnames(self,filename):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
 
         f = open(filename,"r")
         txt = f.readlines()
@@ -291,6 +550,21 @@ class LePhare:
 
 
     def read_output(self,fname=None):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         if fname is None:
             fname = LePhare.CONFIG["CAT_OUT"]
 
@@ -301,6 +575,21 @@ class LePhare:
         return tableLePhare
 
     def cleanup(self, parfile):
+        r"""
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+
+        References
+        ----------
+
+        Examples
+        --------
+
+        """
         files = [ LePhare.CONFIG["CAT_OUT"], LePhare.CONFIG["CAT_IN"],\
                   LePhare.CONFIG["PARA_OUT"], parfile]
         for fl in files:
@@ -309,6 +598,21 @@ class LePhare:
 
 
 def plot_SED(filename, ax = None, sedOnly=False, modelmags = False, **kwargs):
+    r"""
+
+    Parameters
+    ----------
+
+    Returns
+    -------
+
+    References
+    ----------
+
+    Examples
+    --------
+
+    """
     ### Open .spec file[s] and read the parameters
     fsp=open(filename,'r')
 

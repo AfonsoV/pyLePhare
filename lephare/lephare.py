@@ -1,12 +1,12 @@
 """
-$LEPHAREDIR/source/sedtolib -t S -c zphot.para
-$LEPHAREDIR/source/sedtolib -t Q -c zphot.para
-$LEPHAREDIR/source/sedtolib -t G -c zphot.para
-$LEPHAREDIR/source/filter -c zphot.para
-$LEPHAREDIR/source/mag_star -c zphot.para
-$LEPHAREDIR/source/mag_gal -t Q -c zphot.para
-$LEPHAREDIR/source/mag_gal -t G -c zphot.para
-$LEPHAREDIR/source/zphota -c zphot.para
+$LEPHAREDIR/source/sedtolib -t S -c lephare.para
+$LEPHAREDIR/source/sedtolib -t Q -c lephare.para
+$LEPHAREDIR/source/sedtolib -t G -c lephare.para
+$LEPHAREDIR/source/filter -c lephare.para
+$LEPHAREDIR/source/mag_star -c lephare.para
+$LEPHAREDIR/source/mag_gal -t Q -c lephare.para
+$LEPHAREDIR/source/mag_gal -t G -c lephare.para
+$LEPHAREDIR/source/zphota -c lephare.para
 """
 
 import sys

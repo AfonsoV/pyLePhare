@@ -404,6 +404,11 @@ class LePhare:
             if table[bnd].unit is None:
                 raise lephareError(f"{bnd} column has no units.")
             elif table[bnd].unit is u.mag:
+                cols.append(bnd)
+                cols.append(f"{bnd}{errsuffix}")
+                nanSel = np.isnan(table[bnd])
+                table[bnd][nanSel] = -99.
+                table[f"{bnd}{errsuffix}"][nanSel] = -99.
                 pass
             else:
                 table[bnd].convert_unit_to("erg/(s cm2 Hz)")

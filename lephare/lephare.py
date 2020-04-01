@@ -597,6 +597,98 @@ class LePhare:
         return
 
 
+def get_model_SED(filename):
+    r"""
+
+    Parameters
+    ----------
+
+    Returns
+    -------
+
+    References
+    ----------
+
+    Examples
+    --------
+
+    """
+    ### Open .spec file[s] and read the parameters
+    fsp=open(filename,'r')
+
+    bid=fsp.readline()    #header1
+    line=fsp.readline()
+    line=line.split()
+    id=line[0]; zspec=line[1]; zphot=float(line[2])
+    #z68low=float(line[3]); z68hig=float(line[4])
+
+    bid=fsp.readline()    #header2
+    line=fsp.readline()
+    line=line.split()
+    nfilt=int(line[1])
+
+    bid=fsp.readline()    #header3
+    line=fsp.readline()
+    line=line.split()
+    npdf=int(line[1])
+
+    bid=fsp.readline()
+    #header4:  Type Nline Model Library Nband    Zphot Zinf Zsup Chi2  PDF     Extlaw EB-V Lir Age  Mass SFR SSFR
+    models_info=[]
+    for i in range(6):
+        line=fsp.readline()
+        model=line.split()
+        models_info.append(model)
+
+    # Read observed mag, err_mag, filters' lambda_eff and width, models' mag
+    mag=np.zeros(nfilt); em=np.zeros(nfilt);
+    lf=np.zeros(nfilt); dlf=np.zeros(nfilt);
+    mmod=np.zeros(nfilt); mfir=np.zeros(nfilt); mphys=np.zeros(nfilt)
+    for i in range(nfilt):
+        line=fsp.readline(); line=line.split()
+        mag[i]=float(line[0]); em[i]=float(line[1]);
+        lf[i]=float(line[2]); dlf[i]=float(line[3]);
+        mmod[i]=float(line[4]); mfir[i]=float(line[5]); mphys[i]=float(line[6])
+
+    #convert mag(AB syst.) in log(flux)
+    ibad=np.where((mmod<=0) | (mmod>35))
+    mmod=-0.4*(mmod-23.91)  # uJy
+    mmod[ibad]=-10.
+    ibad=np.where((mphys<=0) | (mphys>35))
+    mphys=-0.4*(mphys-23.91)  # uJy
+    mphys[ibad]=-10.
+    ibad=np.where((mfir<=0) | (mfir>35))
+    mfir=-0.4*(mfir-23.91)  # uJy
+    mfir[ibad]=-10.
+
+    zpdf=np.zeros([2,npdf])
+    for i in range(npdf):
+        line=fsp.readline()
+        zpdf[:,i]=np.array(line.split())
+
+    # Read spectra [lambda(A), Mag(AB)]
+    # convert in log(F_nu) = -0.4*(mab-23.91) [uJy]
+    # Loop over the 6 models (GAL-1, GAL-2, GAL-FIR, GAL-STOCH, QSO, STAR)
+    lg=[]; mg=[]
+    for m in range(6):
+        nline=int(models_info[m][1])
+        bid=np.zeros([2,nline])
+        if nline>0:
+            for i in range(nline):
+                line=fsp.readline()
+                bid[:,i]=np.array(line.split())
+                if (bid[1,i]>35):
+                    bid[1,i]=-10.
+                else:
+                    bid[1,i]=-0.4*(bid[1,i]-23.91)
+        lg.append(bid[0,:]/10000.)
+        mg.append(bid[1,:])
+
+    fsp.close()
+    return lg,mg
+
+
+
 def plot_SED(filename, ax = None, sedOnly=False, modelmags = False, **kwargs):
     r"""
 
